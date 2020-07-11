@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import {Button, PageHeader, Icon, Table} from 'ant-design-vue';
+import {Button, PageHeader, Icon, Table, InputNumber} from 'ant-design-vue';
 import Vuex from 'vuex';
 
 Vue.config.productionTip = false;
@@ -9,6 +9,7 @@ Vue.use(Button);
 Vue.use(PageHeader);
 Vue.use(Icon);
 Vue.use(Table);
+Vue.use(InputNumber);
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
