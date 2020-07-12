@@ -12,6 +12,8 @@ Vue.use(Table);
 Vue.use(InputNumber);
 Vue.use(Vuex);
 
+export const EventBus = new Vue();
+
 const store = new Vuex.Store({
     state: {
         current: {

@@ -14,15 +14,22 @@
 </template>
 
 <script>
+    import {EventBus} from '../main.js'
+
     export default {
         name: "Header",
         data: function () {
             return {
-                listState: false, //expanded - true, collapse - false
+                listState: false, //open - true, close - false
             };
         },
         methods: {
             changeListState: function () {
+                if (true === this.listState) {
+                    EventBus.$emit('closeAll');
+                } else {
+                    EventBus.$emit('openAll');
+                }
                 this.listState = !this.listState;
             },
             downloadPriceList: function () {

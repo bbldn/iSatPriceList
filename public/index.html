@@ -5,10 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link href="http://172.17.0.2/min/cache/05b7885c244ed4aa09701153dcca818a.css?v=1.4" type="text/css" rel="stylesheet" media="screen" />
+    <link href="http://172.17.0.2/min/cache/05b7885c244ed4aa09701153dcca818a.css?v=1.4" type="text/css" rel="stylesheet"
+          media="screen"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
+<script>
+    var cart = {
+        add: function () {
+            alert(`Вы совершили покупку товара`);
+        }
+    };
+</script>
 <noscript>
     <strong>
         We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
