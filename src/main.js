@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import {Button, PageHeader, Icon, Table, InputNumber, Dropdown, Menu} from 'ant-design-vue';
+import {Button, Dropdown, Icon, InputNumber, Menu, PageHeader, Table} from 'ant-design-vue';
 import Vuex from 'vuex';
 
 Vue.config.productionTip = false;
@@ -26,7 +26,8 @@ const store = new Vuex.Store({
         },
         user: {
             groupId: 1,
-        }
+        },
+        currencies: [],
     },
     mutations: {
         setAllCategories: function (state, array) {
@@ -38,8 +39,11 @@ const store = new Vuex.Store({
         },
         setUser: function (state, user) {
             state.user = user;
+        },
+        setCurrencies: function (state, currencies) {
+            currencies.user = currencies;
         }
-    }
+    },
 });
 
 new Vue({

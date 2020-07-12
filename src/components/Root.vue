@@ -1,7 +1,14 @@
 <template>
     <div>
-        <Header/>
-        <Body/>
+        <template v-if="true === loaded">
+            <Header/>
+            <Body/>
+        </template>
+        <template v-else>
+            <div class="container-fluid heigth-50 d-flex justify-content-center align-items-center">
+                <a-button type="primary" shape="circle" loading />
+            </div>
+        </template>
     </div>
 </template>
 
@@ -13,6 +20,11 @@
     export default {
         name: 'Root',
         components: {Body, Header},
+        data: function() {
+            return {
+                loaded: false,
+            };
+        },
         methods: {
             loadCategories: function () {
                 axios
@@ -31,6 +43,7 @@
                         }
                         this.$store.commit('setAllCategories', response.data.data.categories);
                         this.$store.commit('setUser', response.data.data.user);
+                        this.loaded = true;
                     });
             }
         },
@@ -40,4 +53,9 @@
     }
 </script>
 
+<style scoped>
+    .heigth-50 {
+        height: 50vh;
+    }
+</style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -5,11 +5,11 @@
                 <template slot="extra">
                     <a-dropdown>
                         <a-menu slot="overlay">
-                            <a-menu-item key="1">$</a-menu-item>
-                            <a-menu-item key="2">грн</a-menu-item>
+                            <a-menu-item key="1">USD</a-menu-item>
+                            <a-menu-item key="2">UAH</a-menu-item>
                         </a-menu>
                         <a-button>
-                            <span>Валюта: $</span>
+                            <span>Валюта: USD</span>
                             <a-icon style="vertical-align: 0.125em;" type="down"/>
                         </a-button>
                     </a-dropdown>

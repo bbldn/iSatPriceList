@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid categories-container">
-        <CategoryItem v-for="category in categories" :key="category.category_id" :category="category"/>
+        <CategoryItem :category="category" v-for="category in categories" :key="category.category_id" />
     </div>
 </template>
 
