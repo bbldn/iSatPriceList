@@ -6,15 +6,17 @@
                     :dataSource="products"
                     :rowKey="row => row.product_id"
             >
+                <a :href="`/index.php?route=product/product&product_id=${row.product_id}`"
+                   slot="name" slot-scope="text, row">{{ row.name }}</a>
                 <a-input-number
                         slot="count"
-                        step="1"
                         slot-scope="text, row"
                         v-model="row.count"
                         :min="1"
-                        :formatter="formatNumber"
+                        :step="1"
+                        :formatter="value => (value + '').replace(/[^0-9]/, '')"
                 />
-                <a-icon type="shopping-cart" slot-scope="text, row" slot="buy" class="cart" @click="buy(row)" />
+                <a-icon type="shopping-cart" slot="buy" slot-scope="text, row" class="cart" @click="buy(row)" />
             </a-table>
         </div>
     </div>
@@ -27,9 +29,6 @@
             products: Array,
         },
         methods: {
-            formatNumber: function(value) {
-                return (value + '').replace(/[^0-9]/, '');
-            },
             buy: function(row) {
                 /* global cart */
                 cart.add(row.product_id, row.count);
@@ -48,6 +47,7 @@
                         dataIndex: 'name',
                         sorter: (a, b) => a.name.localeCompare(b.name),
                         width: width[0],
+                        scopedSlots: {customRender: 'name'},
                     },
                     {title: 'Розница', dataIndex: 'retail', sorter: (a, b) => a.retail - b.retail, width: width[1],},
                 ];

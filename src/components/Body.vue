@@ -1,17 +1,18 @@
 <template>
     <div class="container-fluid categories-container">
-        <CategoryItem v-for="category in categories" v-bind:key="category.category_id" v-bind:category="category"/>
+        <CategoryItem v-for="category in categories" :key="category.category_id" :category="category"/>
     </div>
 </template>
 
 <script>
     import CategoryItem from "./CategoryItem";
+
     export default {
         name: "Body",
         components: {CategoryItem},
         computed: {
             categories() {
-                return this.$store.state.current.categories;
+                return this.$store.state.current.categories.filter((category) => category.products.length > 0);
             },
         }
     }

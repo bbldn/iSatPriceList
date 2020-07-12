@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import {Button, PageHeader, Icon, Table, InputNumber} from 'ant-design-vue';
+import {Button, PageHeader, Icon, Table, InputNumber, Dropdown, Menu} from 'ant-design-vue';
 import Vuex from 'vuex';
 
 Vue.config.productionTip = false;
@@ -10,6 +10,8 @@ Vue.use(PageHeader);
 Vue.use(Icon);
 Vue.use(Table);
 Vue.use(InputNumber);
+Vue.use(Dropdown);
+Vue.use(Menu);
 Vue.use(Vuex);
 
 export const EventBus = new Vue();

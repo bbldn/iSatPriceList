@@ -2,18 +2,21 @@
     <div>
         <div class="row category-item">
             <div class="col-12">
-                <a-icon v-if="!category.opened" @click="changeSignState" type="plus" :style="{ fontSize: '0.7em' }" class="sign" />
-                <a-icon v-if="category.opened" @click="changeSignState" type="minus" :style="{ fontSize: '0.7em' }" class="sign" />
+                <a-icon :type="true === category.opened ? 'minus': 'plus'"
+                        :style="{ fontSize: '0.7em' }"
+                        class="sign"
+                        @click="changeSignState"
+                />
                 {{ category.name }}
             </div>
         </div>
-        <ProductTable v-if="category.opened" :products="category.products" />
+        <ProductTable v-if="true === category.opened" :products="category.products"/>
     </div>
 </template>
 
 <script>
-    import {EventBus} from '../main.js'
     import ProductTable from "./ProductTable";
+    import {EventBus} from '../main.js'
 
     export default {
         name: "CategoryItem",
@@ -26,15 +29,15 @@
                 this.category.opened = !this.category.opened;
             }
         },
-        created () {
+        created() {
             EventBus.$on('openAll', () => {
-                if (false === this.opened) {
+                if (false === this.category.opened) {
                     this.changeSignState();
                 }
             });
 
             EventBus.$on('closeAll', () => {
-                if (true === this.opened) {
+                if (true === this.category.opened) {
                     this.changeSignState();
                 }
             });
