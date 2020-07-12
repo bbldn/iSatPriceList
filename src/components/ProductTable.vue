@@ -8,6 +8,7 @@
             >
                 <a :href="`/index.php?route=product/product&product_id=${row.product_id}`"
                    slot="name" slot-scope="text, row">{{ row.name }}</a>
+                <span slot="price" slot-scope="text">{{ Math.round(text * defaultCurrency.value) + defaultCurrency.symbol }}</span>
                 <a-input-number
                         slot="count"
                         slot-scope="text, row"
@@ -35,7 +36,10 @@
             }
         },
         computed: {
-            columns() {
+            defaultCurrency: function () {
+                return this.$store.state.currency;
+            },
+            columns: function() {
                 let width = ['65%', '15%', '0', '15%', '5%',];
                 if (this.$store.state.user.groupId > 1) {
                     width[2] = '15%';
@@ -49,7 +53,13 @@
                         width: width[0],
                         scopedSlots: {customRender: 'name'},
                     },
-                    {title: 'Розница', dataIndex: 'retail', sorter: (a, b) => a.retail - b.retail, width: width[1],},
+                    {
+                        title: 'Розница',
+                        dataIndex: 'retail',
+                        sorter: (a, b) => a.retail - b.retail,
+                        width: width[1],
+                        scopedSlots: {customRender: 'price'},
+                    },
                 ];
 
                 switch (this.$store.state.user.groupId) {
@@ -59,6 +69,7 @@
                             dataIndex: 'dealer',
                             sorter: (a, b) => a.dealer - b.dealer,
                             width: width[2],
+                            scopedSlots: {customRender: 'price'},
                         });
                         break;
                     case 3:
@@ -67,6 +78,7 @@
                             dataIndex: 'partner',
                             sorter: (a, b) => a.partner - b.partner,
                             width: width[2],
+                            scopedSlots: {customRender: 'price'},
                         });
                         break;
                     case 4:
@@ -75,6 +87,7 @@
                             dataIndex: 'wholesale',
                             sorter: (a, b) => a.wholesale - b.wholesale,
                             width: width[2],
+                            scopedSlots: {customRender: 'price'},
                         });
                         break;
                 }

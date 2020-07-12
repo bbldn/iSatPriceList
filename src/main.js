@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import {Button, Dropdown, Icon, InputNumber, Menu, PageHeader, Table} from 'ant-design-vue';
 import Vuex from 'vuex';
+import Helper from './helpers/Helper';
 
 Vue.config.productionTip = false;
 
@@ -28,6 +29,7 @@ const store = new Vuex.Store({
             groupId: 1,
         },
         currencies: [],
+        currency: Helper.getDefaultCurrency([]),
     },
     mutations: {
         setAllCategories: function (state, array) {
@@ -41,7 +43,10 @@ const store = new Vuex.Store({
             state.user = user;
         },
         setCurrencies: function (state, currencies) {
-            currencies.user = currencies;
+            state.currencies = currencies;
+        },
+        setCurrency: function (state, currency) {
+            state.currency = currency;
         }
     },
 });

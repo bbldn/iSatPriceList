@@ -16,6 +16,7 @@
     import Header from "./Header";
     import Body from "./Body";
     import axios from 'axios';
+    import Helper from '../helpers/Helper';
 
     export default {
         name: 'Root',
@@ -41,8 +42,11 @@
 
                             return;
                         }
-                        this.$store.commit('setAllCategories', response.data.data.categories);
                         this.$store.commit('setUser', response.data.data.user);
+                        this.$store.commit('setCurrency', Helper.getDefaultCurrency(response.data.data.currencies));
+                        this.$store.commit('setCurrencies', response.data.data.currencies);
+                        this.$store.commit('setAllCategories', response.data.data.categories);
+
                         this.loaded = true;
                     });
             }

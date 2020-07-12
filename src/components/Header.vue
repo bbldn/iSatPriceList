@@ -5,22 +5,31 @@
                 <template slot="extra">
                     <a-dropdown>
                         <a-menu slot="overlay">
-                            <a-menu-item key="1">USD</a-menu-item>
-                            <a-menu-item key="2">UAH</a-menu-item>
+                            <a-menu-item
+                                    v-for="currency in currencies"
+                                    :key="currency.currency_id"
+                                    @click="setDefaultPrice(currency.code)"
+                            >
+                                {{ currency.code }}
+                            </a-menu-item>
                         </a-menu>
                         <a-button>
-                            <span>Валюта: USD</span>
+                            <span>Валюта: {{ defaultCurrency.code }}</span>
                             <a-icon style="vertical-align: 0.125em;" type="down"/>
                         </a-button>
                     </a-dropdown>
                     <a-button @click="changeListState" class="mr-1">
-                        {{ listState ? 'Свернуть всё': 'Развернуть всё'}}
+                        {{ true === listState ? 'Свернуть всё': 'Развернуть всё'}}
                     </a-button>
-                    <a-dropdown-button @click="downloadPriceList('xlsx')">
+                    <a-dropdown-button v-if="Object.keys(formats).length > 0">
                         Скачать PriceList
                         <a-menu slot="overlay">
-                            <a-menu-item key="1" @click="downloadPriceList('xlsx')">XLSX</a-menu-item>
-                            <a-menu-item key="2" @click="downloadPriceList('json')">JSON</a-menu-item>
+                            <a-menu-item
+                                    v-for="(format, key) in formats"
+                                    :key="key"
+                                    @click="downloadPriceList(index)">
+                                {{ key }}
+                            </a-menu-item>
                         </a-menu>
                     </a-dropdown-button>
                 </template>
@@ -31,6 +40,7 @@
 
 <script>
     import {EventBus} from '../main.js'
+    import Helper from '../helpers/Helper';
 
     export default {
         name: "Header",
@@ -43,6 +53,24 @@
                 }
 
                 return false;
+            },
+            currencies: function () {
+                return this.$store.state.currencies;
+            },
+            defaultCurrency: function () {
+                return this.$store.state.currency;
+            },
+            formats: function () {
+                if (false === Object.prototype.hasOwnProperty.call(window, 'FORMATS')) {
+                    return {};
+                }
+
+                if (false === (FORMATS instanceof Object)) {
+                    return {};
+                }
+
+                /* global FORMATS */
+                return FORMATS;
             }
         },
         methods: {
@@ -52,22 +80,16 @@
                 } else {
                     EventBus.$emit('openAll');
                 }
-                this.listState = !this.listState;
             },
             downloadPriceList: function (format) {
-                switch (format) {
-                    case 'xlsx':
-                        window.open('/files/price_list.xlsx');
-                        break;
-                    case 'json':
-                        window.open('/index.php?route=common/prices/getCategoriesProductsAndInformation');
-                        break;
+                if (undefined !== this.formats[format]) {
+                    window.open(this.formats[format]);
                 }
+            },
+            setDefaultPrice: function (code) {
+                let currency = Helper.getCurrencyByCode(code, this.currencies);
+                this.$store.commit('setCurrency', currency);
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>
