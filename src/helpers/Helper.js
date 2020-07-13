@@ -6,7 +6,7 @@ export default {
             }
         }
 
-        return {value: 1.0, code: 'USD', symbol: '$'};
+        return {value: 1.0, code: 'USD', symbol_left: '$'};
     },
     getCurrencyByCode: function (code, currencies) {
         for (let currency of currencies) {
@@ -15,6 +15,6 @@ export default {
             }
         }
 
-        return {value: 1.0, code: 'USD', symbol: '$'};
+        return {value: 1.0, code: 'USD', symbol_left: '$'};
     }
 };

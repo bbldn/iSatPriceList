@@ -10,8 +10,6 @@
 
     export default {
         name: 'App',
-        components: {
-            Root
-        }
+        components: {Root}
     }
 </script>
