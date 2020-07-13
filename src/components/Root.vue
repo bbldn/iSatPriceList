@@ -51,6 +51,7 @@
             loadFormats: function () {
                 if (false === Object.prototype.hasOwnProperty.call(window, 'FORMATS')) {
                     window.FORMATS = [];
+                    return;
                 }
 
                 window.FORMATS = JSON.parse(window.FORMATS);

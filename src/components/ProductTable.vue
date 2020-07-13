@@ -12,7 +12,9 @@
                     {{ row.name }}
                 </a>
                 <span slot="price" slot-scope="text">
-                    {{ Math.round(text * defaultCurrency.value) + defaultCurrency.symbol }}
+                    {{ defaultCurrency.symbol_left }}
+                    {{ Math.toFixed(text * defaultCurrency.value, defaultCurrency.decimal_place) }}
+                    {{ defaultCurrency.symbol_right }}
                 </span>
                 <a-input-number
                         slot="count"
