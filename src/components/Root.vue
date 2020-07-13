@@ -5,8 +5,8 @@
             <Body/>
         </template>
         <template v-else>
-            <div class="container-fluid heigth-50 d-flex justify-content-center align-items-center">
-                <a-button type="primary" shape="circle" loading />
+            <div class="container-fluid height-50 d-flex justify-content-center align-items-center">
+                <a-button type="primary" shape="circle" loading/>
             </div>
         </template>
     </div>
@@ -15,21 +15,19 @@
 <script>
     import Header from "./Header";
     import Body from "./Body";
-    import axios from 'axios';
-    import Helper from '../helpers/Helper';
 
     export default {
         name: 'Root',
         components: {Body, Header},
-        data: function() {
+        data: function () {
             return {
                 loaded: false,
             };
         },
         methods: {
             loadCategories: function () {
-                axios
-                    .get('/index.php?route=common/prices/getCategoriesProductsAndInformation')
+                this.$axios
+                    .get('/index.php?route=price_list/main/getCategoriesProductsAndInformation')
                     .then(response => {
                         if (200 !== response.status) {
                             console.log('Response code is not 200');
@@ -43,23 +41,34 @@
                             return;
                         }
                         this.$store.commit('setUser', response.data.data.user);
-                        this.$store.commit('setCurrency', Helper.getDefaultCurrency(response.data.data.currencies));
+                        this.$store.commit('setCurrency', this.$helper.getDefaultCurrency(response.data.data.currencies));
                         this.$store.commit('setCurrencies', response.data.data.currencies);
                         this.$store.commit('setAllCategories', response.data.data.categories);
 
                         this.loaded = true;
                     });
+            },
+            loadFormats: function () {
+                if (false === Object.prototype.hasOwnProperty.call(window, 'FORMATS')) {
+                    window.FORMATS = [];
+                }
+
+                window.FORMATS = JSON.parse(window.FORMATS);
+
+                if (false === Array.isArray(window.FORMATS)) {
+                    window.FORMATS = [];
+                }
             }
         },
         beforeMount() {
+            this.loadFormats();
             this.loadCategories();
         }
     }
 </script>
 
 <style scoped>
-    .heigth-50 {
+    .height-50 {
         height: 50vh;
     }
 </style>
-<!-- Add "scoped" attribute to limit CSS to this component only -->

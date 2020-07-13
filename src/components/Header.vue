@@ -21,17 +21,21 @@
                     <a-button @click="changeListState" class="mr-1">
                         {{ true === listState ? 'Свернуть всё': 'Развернуть всё'}}
                     </a-button>
-                    <a-dropdown-button v-if="Object.keys(formats).length > 0">
+                    <a-dropdown-button v-if="formats.length > 1" @click="downloadPriceList(formats[0])">
                         Скачать PriceList
                         <a-menu slot="overlay">
                             <a-menu-item
-                                    v-for="(format, key) in formats"
-                                    :key="key"
-                                    @click="downloadPriceList(index)">
-                                {{ key }}
+                                    class="text-uppercase"
+                                    v-for="(format) in formats"
+                                    :key="format.format"
+                                    @click="downloadPriceList(format)">
+                                {{ format.format }}
                             </a-menu-item>
                         </a-menu>
                     </a-dropdown-button>
+                    <a-button v-else-if="1 === formats.length" @click="downloadPriceList(formats[0])">
+                        Скачать PriceList
+                    </a-button>
                 </template>
             </a-page-header>
         </div>
@@ -39,9 +43,6 @@
 </template>
 
 <script>
-    import {EventBus} from '../main.js'
-    import Helper from '../helpers/Helper';
-
     export default {
         name: "Header",
         computed: {
@@ -61,33 +62,22 @@
                 return this.$store.state.currency;
             },
             formats: function () {
-                if (false === Object.prototype.hasOwnProperty.call(window, 'FORMATS')) {
-                    return {};
-                }
-
-                if (false === (FORMATS instanceof Object)) {
-                    return {};
-                }
-
-                /* global FORMATS */
-                return FORMATS;
+                return window.FORMATS;
             }
         },
         methods: {
             changeListState: function () {
                 if (true === this.listState) {
-                    EventBus.$emit('closeAll');
+                    this.$eventBus.$emit('closeAll');
                 } else {
-                    EventBus.$emit('openAll');
+                    this.$eventBus.$emit('openAll');
                 }
             },
             downloadPriceList: function (format) {
-                if (undefined !== this.formats[format]) {
-                    window.open(this.formats[format]);
-                }
+                window.open(format.url);
             },
             setDefaultPrice: function (code) {
-                let currency = Helper.getCurrencyByCode(code, this.currencies);
+                let currency = this.$helper.getCurrencyByCode(code, this.currencies);
                 this.$store.commit('setCurrency', currency);
             }
         }

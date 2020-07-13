@@ -1,14 +1,19 @@
 <template>
     <div class="row products">
         <div class="col-12">
-            <a-table
-                    :columns="columns"
-                    :dataSource="products"
-                    :rowKey="row => row.product_id"
+            <a-table :columns="columns"
+                     :dataSource="products"
+                     :rowKey="row => row.product_id"
             >
-                <a :href="`/index.php?route=product/product&product_id=${row.product_id}`"
-                   slot="name" slot-scope="text, row">{{ row.name }}</a>
-                <span slot="price" slot-scope="text">{{ Math.round(text * defaultCurrency.value) + defaultCurrency.symbol }}</span>
+                <a slot="name"
+                   slot-scope="text, row"
+                   :href="`/index.php?route=product/product&product_id=${row.product_id}`"
+                >
+                    {{ row.name }}
+                </a>
+                <span slot="price" slot-scope="text">
+                    {{ Math.round(text * defaultCurrency.value) + defaultCurrency.symbol }}
+                </span>
                 <a-input-number
                         slot="count"
                         slot-scope="text, row"
@@ -17,7 +22,7 @@
                         :step="1"
                         :formatter="value => (value + '').replace(/[^0-9]/, '')"
                 />
-                <a-icon type="shopping-cart" slot="buy" slot-scope="text, row" class="cart" @click="buy(row)" />
+                <a-icon type="shopping-cart" slot="buy" slot-scope="text, row" class="cart" @click="buy(row)"/>
             </a-table>
         </div>
     </div>
@@ -30,7 +35,7 @@
             products: Array,
         },
         methods: {
-            buy: function(row) {
+            buy: function (row) {
                 /* global cart */
                 cart.add(row.product_id, row.count);
             }
@@ -39,7 +44,7 @@
             defaultCurrency: function () {
                 return this.$store.state.currency;
             },
-            columns: function() {
+            columns: function () {
                 let width = ['65%', '15%', '0', '15%', '5%',];
                 if (this.$store.state.user.groupId > 1) {
                     width[2] = '15%';

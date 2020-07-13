@@ -3,6 +3,7 @@ import App from './App.vue'
 import {Button, Dropdown, Icon, InputNumber, Menu, PageHeader, Table} from 'ant-design-vue';
 import Vuex from 'vuex';
 import Helper from './helpers/Helper';
+import axios from 'axios';
 
 Vue.config.productionTip = false;
 
@@ -14,8 +15,6 @@ Vue.use(InputNumber);
 Vue.use(Dropdown);
 Vue.use(Menu);
 Vue.use(Vuex);
-
-export const EventBus = new Vue();
 
 const store = new Vuex.Store({
     state: {
@@ -50,6 +49,10 @@ const store = new Vuex.Store({
         }
     },
 });
+
+Vue.prototype.$axios = axios;
+Vue.prototype.$eventBus = new Vue();
+Vue.prototype.$helper = Helper;
 
 new Vue({
     render: h => h(App),

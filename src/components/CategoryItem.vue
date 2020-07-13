@@ -10,13 +10,12 @@
                 {{ category.name }}
             </div>
         </div>
-        <ProductTable :products="category.products" v-if="true === category.opened" />
+        <ProductTable :products="category.products" v-if="true === category.opened"/>
     </div>
 </template>
 
 <script>
     import ProductTable from "./ProductTable";
-    import {EventBus} from '../main.js'
 
     export default {
         name: "CategoryItem",
@@ -30,13 +29,13 @@
             }
         },
         created() {
-            EventBus.$on('openAll', () => {
+            this.$eventBus.$on('openAll', () => {
                 if (false === this.category.opened) {
                     this.changeSignState();
                 }
             });
 
-            EventBus.$on('closeAll', () => {
+            this.$eventBus.$on('closeAll', () => {
                 if (true === this.category.opened) {
                     this.changeSignState();
                 }
