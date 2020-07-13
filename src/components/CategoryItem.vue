@@ -10,7 +10,7 @@
                 {{ category.name }}
             </div>
         </div>
-        <ProductTable :products="category.products" v-if="true === category.opened"/>
+        <ProductTable :products="category.products" v-show="true === category.opened"/>
     </div>
 </template>
 

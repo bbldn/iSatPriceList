@@ -5,7 +5,7 @@
             <Body/>
         </template>
         <template v-else>
-            <div class="container-fluid height-50 d-flex justify-content-center align-items-center">
+            <div class="container-fluid container-loading d-flex justify-content-center align-items-center">
                 <a-button type="primary" shape="circle" loading/>
             </div>
         </template>
@@ -69,7 +69,7 @@
 </script>
 
 <style scoped>
-    .height-50 {
-        height: 50vh;
+    .container-loading {
+        height: 465px;
     }
 </style>
